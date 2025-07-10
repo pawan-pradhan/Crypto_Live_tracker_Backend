@@ -1,0 +1,62 @@
+import express from "express";
+import CurrentCrypto from "../models/CurrentCrypto.js";
+import HistoricalCrypto from "../models/HistoricalCrypto.js";
+import { fetchCryptoData } from "../services/fetchCryptoData.js";
+
+const router = express.Router();
+
+// Manual fetch and save
+router.get("/coins", async (req, res) => {
+  try {
+    const data = await fetchCryptoData();
+
+    await CurrentCrypto.deleteMany({});
+    await CurrentCrypto.insertMany(data);
+    // await HistoricalCrypto.create({ coins: data });
+    console.log("Dashboard data updated with manual fetch", new Date());
+    res.status(200).json({ message: "Data fetched and saved", current:data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// router.get("/coins", async (req, res) => {
+//   try {
+//     console.log("Fetching current data...");
+//     const current = await CurrentCrypto.find();
+//     res.json(current);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+router.post("/history", async (req, res) => {
+  try {
+    console.log("Fetching historical data...");
+    const history = await HistoricalCrypto.find().sort({ timestamp: -1 }).limit(24);
+    res.json(history);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/history/:coinId", async (req, res) => {
+  try {
+      const { coinId } = req.params;
+      console.log("id based Fetching historical data for coin:", coinId);
+    const history = await HistoricalCrypto.find({
+      "coins.id": coinId,
+    }).sort({ timestamp: 1 });
+
+    const filtered = history.map(entry =>
+      entry.coins.find(c => c.id === coinId)
+    );
+
+    res.json(filtered);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+export default router;
