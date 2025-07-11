@@ -40,7 +40,7 @@ router.post("/history", async (req, res) => {
   }
 });
 
-router.post("/history/:coinId", async (req, res) => {
+router.gett("/history/:coinId", async (req, res) => {
   try {
       const { coinId } = req.params;
       console.log("id based Fetching historical data for coin:", coinId);
