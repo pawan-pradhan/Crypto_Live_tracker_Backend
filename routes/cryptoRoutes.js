@@ -59,4 +59,16 @@ router.get("/history/:coinId", async (req, res) => {
 });
 
 
+// empty api endpoint to continue alive the server
+router.post("/alive", async (req, res) => {
+  try {
+    console.log("calling alive api end ...");
+    
+    res.json({message:"Alive api called"});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 export default router;
