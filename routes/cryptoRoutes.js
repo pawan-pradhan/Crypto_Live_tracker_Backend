@@ -60,7 +60,7 @@ router.get("/history/:coinId", async (req, res) => {
 
 
 // empty api endpoint to continue alive the server
-router.post("/alive", async (req, res) => {
+router.get("/alive", async (req, res) => {
   try {
     console.log("calling alive api end ...");
     
