@@ -5,30 +5,15 @@ import { fetchCryptoData } from "../services/fetchCryptoData.js";
 
 const router = express.Router();
 
-// Manual fetch and save
 router.get("/coins", async (req, res) => {
   try {
-    const data = await fetchCryptoData();
-
-    await CurrentCrypto.deleteMany({});
-    await CurrentCrypto.insertMany(data);
-    // await HistoricalCrypto.create({ coins: data });
-    console.log("Dashboard data updated with manual fetch", new Date());
-    res.status(200).json({ message: "Data fetched and saved", current:data });
+    const data = await CurrentCrypto.find().sort({ market_cap: -1 }); // ✅ Fetch from DB
+    res.status(200).json({ current: data });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// router.get("/coins", async (req, res) => {
-//   try {
-//     console.log("Fetching current data...");
-//     const current = await CurrentCrypto.find();
-//     res.json(current);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
 router.post("/history", async (req, res) => {
   try {
