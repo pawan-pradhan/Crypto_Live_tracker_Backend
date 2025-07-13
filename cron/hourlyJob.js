@@ -5,7 +5,7 @@ import HistoricalCrypto from "../models/HistoricalCrypto.js";
 
 // 🕒 Cron Job 1: Every 30 mins => Update dashboard (CurrentCrypto)
 export const startCurrentUpdater = () => {
-  cron.schedule("*/30 * * * *", async () => {
+  cron.schedule("*/5 * * * *", async () => {
     try {
       const data = await fetchCryptoData();
       await CurrentCrypto.deleteMany({});
@@ -19,7 +19,7 @@ export const startCurrentUpdater = () => {
 
 // 🕐 Cron Job 2: Every 1 hour => Save snapshot to HistoricalCrypto
 export const startHistoryLogger = () => {
-  cron.schedule("0 * * * *", async () => {
+  cron.schedule("*/5 * * * *", async () => {
     try {
       const current = await CurrentCrypto.find();
       if (current.length > 0) {
