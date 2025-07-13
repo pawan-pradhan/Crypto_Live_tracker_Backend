@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import cryptoRoutes from "./routes/cryptoRoutes.js";
-import { startCurrentUpdater, startHistoryLogger } from "./cron/jobs.js";
+import { startCurrentUpdater, startHistoryLogger } from "./cron/hourlyJob.js";
 
 dotenv.config();
 
