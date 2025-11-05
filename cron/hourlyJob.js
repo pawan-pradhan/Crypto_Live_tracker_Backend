@@ -7,10 +7,10 @@ import HistoricalCrypto from "../models/HistoricalCrypto.js";
 export const startCurrentUpdater = () => {
   cron.schedule("*/30 * * * *", async () => {
     try {
-      const data = await fetchCryptoData();
-      await CurrentCrypto.deleteMany({});
-      await CurrentCrypto.insertMany(data);
-      console.log("[CRON-30min] Updated CurrentCrypto:", new Date());
+      // const data = await fetchCryptoData();
+      // await CurrentCrypto.deleteMany({});
+      // await CurrentCrypto.insertMany(data);
+      // console.log("[CRON-30min] Updated CurrentCrypto:", new Date());
     } catch (err) {
       console.error("[CRON-30min ERROR]", err.message);
     }
