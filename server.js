@@ -14,7 +14,7 @@ const app = express();
 // ✅ Allow CORS for React (Vite default port 5173)
 app.use(
   cors({
-    origin: "http://localhost:5173", // Frontend origin
+    origin: "https://cryptolivetracking.netlify.app", // Frontend origin
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
