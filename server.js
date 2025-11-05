@@ -19,7 +19,7 @@ app.use(express.json());
 // ✅ Routes
 app.use("/api", cryptoRoutes);
 
-app.use("/api", fileRoutes);
+app.use("/", fileRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
